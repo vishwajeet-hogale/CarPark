@@ -1,6 +1,7 @@
 import random
 from datetime import datetime
 import Allotment as almnt
+from flask import Flask,render_template,redirect,url_for,flash,request
 """
 50 slots  for cars,tempos,bus
 100 slots for bikes 
@@ -35,13 +36,16 @@ class Parking(): #Parking class. Each object represents a parking slot
     def get_difference_time(self,entry):
         try:
             diff = self.get_exit_time() - entry
-            return diff.second/60 + diff.hours*60 + diff.minute
+            
+            return divmod(diff.total_seconds(),60)[0]
         except:
             print("Error in get_difference_time")
     def get_totalbill(self):
-        total_time = self.get_difference_time(self.entry,self.get_exit_time()) 
+        total_time = int(self.get_difference_time(self.entry))
+        print(total_time)
         price = 10
-        price += (total_time//60)*20
+        price += int(total_time/60)*20
+        print(price)
         return price
     # def add_to_stack(self,type):
     #     if(self.type_vehicle == "small" or self.type_vehicle == "Small"):
@@ -64,5 +68,7 @@ def get_slot(obj):
         elif(obj.type_vehicle=="big" or obj.type_vehicle == "Big"):
             almnt.alloted_big[obj.parking_no] = obj
             almnt.big.remove(obj.parking_no)
+        else:
+            flash("Please enter small or big!")
 
         

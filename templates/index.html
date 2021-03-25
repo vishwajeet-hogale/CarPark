@@ -2,7 +2,7 @@
 {% block body %}
             
   <div style="text-align: center;color: azure;font-size: 40px;font-weight: 800;margin-bottom: 20px;">
-    Add a new record here
+    Welcome to the parking
   </div>
   <div class="row">
     <div class="col-md-5">
@@ -38,7 +38,7 @@
     </div>
     <div class="col-md-7" >
       <div style="text-align: center;color: azure;font-size: 30px;font-weight: 500;margin-bottom: 20px;margin-top: 30px;">
-        Recently entered records
+        Vehicles in the parking
       </div>
       <table class="table table-striped table-hover table-bordered table-sm bg-white">
         <thead>
@@ -59,8 +59,12 @@
             <td>{{p.3}}</td>
             
             <td>
-              <a href="/edit/{{p.6}}" class="btn btn-secondary">edit</a>
-              <a href="/delete/{{p.6}}" class="btn btn-danger btn-delete">delete</a>
+              <!-- <a href="/edit/{{p.0}}" class="btn btn-secondary">edit</a> -->
+              {% if p.2 == "Small" or p.2 == "small" %}
+              <a href="/delete/Small/{{p.0}}" class="btn btn-danger btn-delete">delete</a>
+              {% else %}
+              <a href="/delete/Big/{{p.0}}" class="btn btn-danger btn-delete">delete</a>
+              {% endif %}
             </td>
           </tr>
           {% endfor %}

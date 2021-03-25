@@ -2,7 +2,7 @@ from flask import Flask,render_template,redirect,url_for,flash,request
 import Allotment as almnt
 import Parking as pk
 app = Flask(__name__)
-
+app.secret_key = "mysecretkey"
 
 def get_all_parking_details():
     list1 = list(almnt.alloted_big.values())
@@ -27,6 +27,23 @@ def add():
         pk.get_slot(obj)
         print(almnt.alloted_small)
         return redirect(url_for("index"))
+@app.route('/delete/Small/<int:parking_no>', methods = ['POST','GET'])
+def delete_small(parking_no):
+    obj = almnt.alloted_small[parking_no]
+    price = obj.get_totalbill()
+    print(price)
+    flash('Rs. {}/-'.format(price))
+    almnt.alloted_small.pop(parking_no)
+    return redirect(url_for('index'))
+@app.route('/delete/Big/<int:parking_no>', methods = ['POST','GET'])
+def delete_big(parking_no):
+    print(almnt.alloted_big)
+    obj = almnt.alloted_big[parking_no]
+    price = obj.get_totalbill()
+    almnt.alloted_big.pop(parking_no)
+    print(price)
+    flash('Rs. {}/-'.format(price))
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(debug=True)
