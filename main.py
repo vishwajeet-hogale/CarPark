@@ -9,7 +9,7 @@ def get_all_parking_details():
     
     list2 = list(almnt.alloted_small.values())
     print(list2)
-    data = [(i.vehicle_number,i.type_vehicle,i.entry) for i in list1+ list2]
+    data = [(i.parking_no,i.vehicle_number,i.type_vehicle,i.entry) for i in list1+ list2]
     return data 
 
 @app.route("/")
